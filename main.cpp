@@ -12,6 +12,11 @@ struct CHS {
     struct CHS *next;
     bool init;
     Key word;
+    CHS(){
+        next = nullptr;
+        init = false;
+        word = "undef";
+    }
 };
 /*(Description)
  *(Definition) The organization of methods of this class guarantees the absence of a null pointer in any cell of the table.
@@ -53,18 +58,12 @@ public:
     Value& operator[](const Key& k);    //returns value by key. An unsafe method.
     Value& at(const Key& k);            //returns value by key
     const Value& at(const Key& k) const;//returns value by key
+    bool contains(const Key& k) const;  //Checking the presence of a value for a given key
 
     bool erase(const Key& k);           //removes the element for a given key
     bool insert(const Key& k, const Value& v);  //Insert into the container. The return value is the success of the insertion
     bool add_elem(const Key& k,const Value& v);
-/*
 
-
-        bool contains(const Key& k) const;  //Checking the presence of a value for a given key
-        void ExpandTable();                 //increase the size of the table
-        */
-
-    void FreeTable();                   //table cleaning
     int hash(Key word) const;           //returns a hash-value for a given key
     static bool compareElements(Value* a, Value* b){
         if(a->weight != b->weight)return false;
@@ -75,38 +74,22 @@ public:
         return (size_t)numEl;
     }
     bool empty() const{
-        if(numEl == 0) return true;
+        return (numEl != 0);
+    }
+
+    friend bool operator==(const HashTable & a, const HashTable & b){
+            if(a.numEl != b.numEl) return false;
+            int n = (int)a.size();
+            for(int i =0 ; i < n; i++){
+                if(a.Chains[i].init)
+                    if(!b.contains(a.Chains[i].word))
+                        return false;
+            }
         return false;
     }
-/*
-        friend bool operator==(const HashTable & a, const HashTable & b){
-            if(a.numEl != b.numEl) return false;
-            int mSize;
-            mSize = b.Size;
-            if(a.Size <= b.Size) mSize = a.Size;
-            for(int i=0; i < mSize; i++){
-                if(!compareElements(a.Table[i],b.Table[i]))
-                if(a.Table[i]->next_ifc != nullptr){
-                    if(b.Table[i]->next_ifc != nullptr){
-                        Value* atmp = a.Table[i]->next_ifc;
-                        Value* btmp = b.Table[i]->next_ifc;
-                        while (atmp->next_ifc != nullptr || btmp->next_ifc != nullptr){
-                            if(!compareElements(atmp,btmp))return false;
-                            atmp = atmp->next_ifc;
-                            btmp = btmp->next_ifc;
-                        }
-                        if(!(atmp->next_ifc == nullptr && btmp->next_ifc == nullptr))return false;
-                    }
-                    else{ return false;}
-                }
-
-            }
-            return true;
-        }
-        friend bool operator!=(const HashTable & a, const HashTable & b){
-            if (!(a == b))return true;
-            return false;
-        }*/
+    friend bool operator!=(const HashTable & a, const HashTable & b){
+        return !(a == b);
+    }
 };
 
 /*#include <gtest/gtest.h>
@@ -178,6 +161,7 @@ Value& HashTable::operator[](const Key &k) {
     Value *Badres= new Value;//needs to insert it
     Badres->age = 0;
     Badres->weight= 0;
+    insert("error",*Badres);
     return *Badres;
 
 }
@@ -312,19 +296,19 @@ bool HashTable::add_elem(const Key& k,const Value& v){    ///No optimization bec
     }
     return true;
 }
-/*
-    bool HashTable::contains(const Key& k) const{
-        if(!Table[hash(k)]->init)return false;
-        if(Table[hash(k)]->word == k ) return true;
-        if(Table[hash(k)]->next_ifc == nullptr) return false;
-        Value* now = Table[hash(k)]->next_ifc;
-        while(now->next_ifc != nullptr){
+
+bool HashTable::contains(const Key& k) const{
+        if(!Chains[hash(k)].init)return false;
+        if(Chains[hash(k)].word == k ) return true;
+        if(Chains[hash(k)].next == nullptr) return false;
+        CHS* now = &Chains[hash(k)];
+        while(now->next != nullptr){
             if(now->word == k)return true;
-            now = now->next_ifc;
+            now = now->next;
         }
         return false;
     }
-*/
+
 void HashTable::CopyTable(HashTable b){
 
     Size = b.Size;

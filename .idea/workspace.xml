@@ -11,7 +11,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51ad68bb-afda-4b1e-9b4b-91c6d9b0ec43" name="Default Changelist" comment="" />
+    <list default="true" id="51ad68bb-afda-4b1e-9b4b-91c6d9b0ec43" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/1_lab.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/1_lab.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/1_lab.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/1_lab.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/1_lab.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/1_lab.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,13 +38,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="1628" />
+          <entry key="cpp" value="1928" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Doxygen file" value="1" />
-          <entry key="ObjectiveC" value="1627" />
+          <entry key="ObjectiveC" value="1927" />
         </counts>
       </usages-collector>
     </session>
@@ -51,16 +59,26 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2502">
-              <caret line="234" column="24" selection-start-line="234" selection-start-column="24" selection-end-line="234" selection-end-column="24" />
+            <state relative-caret-position="238">
+              <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#3032#3213#0" />
+                <element signature="e#3222#3286#0" />
+                <element signature="e#3295#3390#0" />
+                <element signature="e#3109#4174#0" />
+                <element signature="e#4183#4323#0" />
+                <element signature="e#5885#5937#0" />
+                <element signature="e#5943#6465#0" />
+                <element signature="e#6471#6943#0" />
+                <element signature="e#6949#7409#0" />
                 <element signature="e#7415#7544#0" />
                 <element signature="e#7550#7772#0" />
                 <element signature="e#7488#7957#0" />
                 <element signature="e#7959#8787#0" />
                 <element signature="e#9138#9272#0" />
                 <element signature="e#8976#9758#0" />
+                <element signature="e#9748#10156#0" />
                 <element signature="e#9751#11178#0" />
                 <element signature="e#11097#12814#0" />
                 <element signature="e#11746#11939#0" />
@@ -70,6 +88,15 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>void FreeTable();</find>
+      <find>void</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -84,12 +111,13 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="243" />
     <option name="y" value="22" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -142,15 +170,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1539774845291</updated>
-      <workItem from="1539774847703" duration="6711000" />
+      <workItem from="1539774847703" duration="8867000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6711000" />
+    <option name="totallyTimeSpent" value="8867000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
@@ -187,16 +215,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2502">
-          <caret line="234" column="24" selection-start-line="234" selection-start-column="24" selection-end-line="234" selection-end-column="24" />
+        <state relative-caret-position="238">
+          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#3032#3213#0" />
+            <element signature="e#3222#3286#0" />
+            <element signature="e#3295#3390#0" />
+            <element signature="e#3109#4174#0" />
+            <element signature="e#4183#4323#0" />
+            <element signature="e#5885#5937#0" />
+            <element signature="e#5943#6465#0" />
+            <element signature="e#6471#6943#0" />
+            <element signature="e#6949#7409#0" />
             <element signature="e#7415#7544#0" />
             <element signature="e#7550#7772#0" />
             <element signature="e#7488#7957#0" />
             <element signature="e#7959#8787#0" />
             <element signature="e#9138#9272#0" />
             <element signature="e#8976#9758#0" />
+            <element signature="e#9748#10156#0" />
             <element signature="e#9751#11178#0" />
             <element signature="e#11097#12814#0" />
             <element signature="e#11746#11939#0" />
