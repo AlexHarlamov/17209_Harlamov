@@ -3,11 +3,11 @@
 //
 #include "header.h"
 HashTable::HashTable() {
-    Size = 5;
+    Size = START_NUM;
     Chains = new CHS [Size];
     numEl = 0;
     for(int i=0; i< Size; i++){
-        Chains[i].word = {'u','n','d','e','f'};
+        Chains[i].word = "undef";
         Chains[i].main = nullptr;
         Chains[i].next = nullptr;
         Chains[i].init = false;
@@ -92,7 +92,7 @@ void HashTable::swap(HashTable &b) {
 void HashTable::clear() {
     for (int i = Size; i < Size; i++){
 
-        Chains[i].word = {'u','n','d','e','f'};
+        Chains[i].word = "undef";
         Chains[i].init = false;
 
         CHS *now = Chains[i].next;
@@ -147,9 +147,10 @@ bool HashTable::insert(const Key& k, const Value& v){
     return false;
 }
 
-bool HashTable::add_elem(const Key& k,const Value& v){    ///No optimization because warning
-    if (Chains[hash(k)].init){      //if we have collision
-        CHS* now = &Chains[hash(k)];
+bool HashTable::add_elem(const Key& k,const Value& v){
+    int key = hash(k);
+    if (Chains[key].init){      //if we have collision
+        CHS* now = &Chains[key];
         while (now->next != nullptr)
             now = now->next;        //find last chain element
         now->next = new CHS;
@@ -159,13 +160,13 @@ bool HashTable::add_elem(const Key& k,const Value& v){    ///No optimization bec
         now->next->main->weight = v.weight;
         now->next->main->age = v.age;
     }
-    if(!Chains[hash(k)].init){
-        Chains[hash(k)].main = new Value;
-        Chains[hash(k)].main->age = v.age;
-        Chains[hash(k)].main->weight = v.weight;
-        Chains[hash(k)].init = true;
-        Chains[hash(k)].word = k;
-        Chains[hash(k)].next = nullptr;
+    if(!Chains[key].init){
+        Chains[key].main = new Value;
+        Chains[key].main->age = v.age;
+        Chains[key].main->weight = v.weight;
+        Chains[key].init = true;
+        Chains[key].word = k;
+        Chains[key].next = nullptr;
     }
     return true;
 }
@@ -232,18 +233,21 @@ void HashTable::ExpandTable() {
     CHS* tmp_way;
     Value* rld_elem;
     Value* new_elem;
-
+    int key;
+        CHS *tmp_DEBUG1;
     for(int i = 0; i< Size; i++){
+        key = hash(Chains[i].word);
+        tmp_DEBUG1 = &Chains[i];
         if (Chains[i].init){
-            NewTable[hash(Chains[i].word)].word = Chains[i].word;       //first chain replace
-            NewTable[hash(Chains[i].word)].init = true;
+            NewTable[key].word = Chains[i].word;       //first chain replace
+            NewTable[key].init = true;
 
             rld_elem = Chains[i].main;
             new_elem = new Value;
             new_elem->age = rld_elem->age;
             new_elem->weight = rld_elem->weight;
 
-            NewTable[hash(Chains[i].word)].main = new_elem;
+            NewTable[key].main = new_elem;
             delete rld_elem;
 
             loader = Chains[i].next;
@@ -283,10 +287,10 @@ void HashTable::ExpandTable() {
 }
 
 int HashTable::hash (Key word) const {
-    int seed = 131;
+    int seed = 1;
     int hash = 0;
     for (char i : word) {
         hash = (hash * seed) + i;
     }
-    return hash % Size;
+    return (unsigned)hash % Size;
 }

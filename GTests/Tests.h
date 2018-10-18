@@ -5,6 +5,7 @@
 #ifndef INC_1_LAB_TESTS_H
 #define INC_1_LAB_TESTS_H
 
+#include "../header.h"
 
 class Tests {
 

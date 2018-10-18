@@ -5,6 +5,9 @@
 #ifndef INC_1_LAB_HEADER_H
 #define INC_1_LAB_HEADER_H
 
+#define START_NUM 10
+#define LARGEST_NAME 30
+
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
@@ -23,6 +26,7 @@ struct CHS {
     bool init;
     Key word;
     CHS(){
+        word.resize(LARGEST_NAME);
         next = nullptr;
         init = false;
         word = "undef";
@@ -51,19 +55,57 @@ private:
     CHS *Chains;
 
 public:
-    HashTable();
-    HashTable(const HashTable& b){
-        Size = 0;
-        numEl = 0;
+    /*tested*/HashTable();
+    /*tested*/HashTable(const HashTable& b){
+
+        Size = b.Size;
+        numEl = b.numEl;
+
         Chains = new CHS [Size]; //method CopyTable needs initialization of field "Table"
-        CopyTable(b);
+
+        Value *b_main;
+        CHS *bc_now;
+        CHS *b_now;
+
+        for(int i=0; i< Size;i++){//copying fields of Table elements
+            if(!b.Chains[i].init){
+                Chains[i].init = false;
+                Chains[i].word = "undef";
+                Chains[i].main = nullptr;
+                Chains[i].next = nullptr;
+            }
+            else{
+                bc_now = &Chains[i];
+                b_now = &b.Chains[i];
+
+                while(b_now != nullptr){
+                    bc_now->init = true;
+                    bc_now->word = b_now->word;
+
+                    b_main = new Value;     //generate copy of main
+
+                    b_main->age = b_now->main->age;
+                    b_main->weight = b_now->main->age;
+
+                    bc_now->main = b_main;      //add copy of main
+
+                    if(b_now->next != nullptr) //add new Chain if needed
+                        bc_now->next = new CHS;
+
+                    b_now = b_now->next;
+                    bc_now = bc_now->next;
+                }
+            }
+
+
+        }
     }
     ~HashTable();
 
-
+/*tested*/
     void CopyTable(HashTable b);        //copy hash-table
     void swap(HashTable& b);
-    void clear();               //clean container
+    void clear();                       //clean container
     void ExpandTable();                 //increase the size of the table
 
     HashTable& operator=(const HashTable& b);
@@ -82,10 +124,13 @@ public:
 
     int hash(Key word) const;           //returns a hash-value for a given key
     size_t size() const{
-        return (size_t)numEl;
+        return (size_t)Size;
     }
     bool empty() const{
-        return (numEl != 0);
+        return (numEl == 0);
+    }
+    int numof(){
+        return numEl;
     }
 
     //friends
