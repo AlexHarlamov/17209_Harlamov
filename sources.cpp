@@ -22,6 +22,10 @@ HashTable::HashTable(int size) {
 }
 
 HashTable::HashTable(const HashTable& b){
+    Size = b.Size;
+    Chains = new CHS [Size];
+    numEl = 0;
+
     CopyTable(b);
 }
 
@@ -216,6 +220,7 @@ bool HashTable::ReloadData(int NewSize, HashTable &Source) {
     NewHashTable->clear();
     delete NewHashTable;
 
+    return true;
 }
 
 int HashTable::hash (Key word) const {

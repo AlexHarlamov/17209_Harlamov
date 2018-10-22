@@ -26,10 +26,8 @@ struct CHS {
     Key word;
     CHS(){
         word.resize(LARGEST_NAME);
-        next = nullptr;
-        init = false;
-        word = "undef";
-        main = nullptr;
+        ToDeafault();
+
     }
     void ToDeafault();
     void CopyByCHS(CHS *b);
@@ -84,8 +82,10 @@ public:
     void swap(HashTable& b);
     static bool compareElements(Value* a, Value* b);
     void clear();                                        //clean container
+    HashTable& operator=(const HashTable& b);
 
-   ///Comparator
+   ///Comparators
+
     friend bool operator==(const HashTable &a, const HashTable &b){
        if(a.numEl != b.numEl) return false;
        int n = (int)a.size();
@@ -100,12 +100,7 @@ public:
         return !(a == b);
     }
 
-    HashTable& operator=(const HashTable& b);
-
-
-
-    bool contains(const Key& k) const;                   //Checking the presence of a value for a given key
-
+    ///Data info
     size_t size() const{
         return (size_t)numEl;
     }
@@ -115,8 +110,7 @@ public:
     int tablesize(){
         return Size;
     }
-
-    //friends
+    bool contains(const Key& k) const;                   //Checking the presence of a value for a given key
 
 };
 
