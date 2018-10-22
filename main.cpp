@@ -1,7 +1,6 @@
 #include "header.h"
+#include "GTests/Tests.h"
 
-int main(int argc,char* argv[]){
-    testing::InitGoogleTest(&argc,argv);
-    RUN_ALL_TESTS();
-    return 0;
+int main(int argc,char **argv){
+    Testing(argc,argv);
 }

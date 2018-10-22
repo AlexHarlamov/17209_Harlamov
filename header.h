@@ -8,9 +8,6 @@
 #define START_NUM 10
 #define LARGEST_NAME 30
 
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-
 #include <iostream>
 #include <string>
 
@@ -19,7 +16,9 @@ typedef std::string Key;
 struct Value {
     unsigned age;
     unsigned weight;
+    void CopyValue (const Value &v);
 };
+
 struct CHS {
     Value* main;
     struct CHS *next;
@@ -32,7 +31,11 @@ struct CHS {
         word = "undef";
         main = nullptr;
     }
+    void ToDeafault();
+    void CopyByCHS(CHS *b);
+    void CopyByInstr(const Value &v, const Key &k);
 };
+
 /*(Description)
  *(Definition) The organization of methods of this class guarantees the absence of a null pointer in any cell of the table.
  * When accessing a specific table address, it is necessary to check whether the given cell of the table is defined.
@@ -54,99 +57,67 @@ private:
     int numEl;
     CHS *Chains;
 
+    bool add_elem(const Key& k,const Value& v);         //Insert into the container. Dont update numEl field
+    int hash(Key word) const;                           //returns a hash-value for a given key
+    bool ReloadData(int NewSize, HashTable &Source);    //replaces this table with transfused data from the source
+    void ExpandTable();                                  //increase the size of the table
+
 public:
+    ///Constructors && Destructor
+
     /*tested*/HashTable();
-    /*tested*/HashTable(const HashTable& b){
-
-        Size = b.Size;
-        numEl = b.numEl;
-
-        Chains = new CHS [Size]; //method CopyTable needs initialization of field "Table"
-
-        Value *b_main;
-        CHS *bc_now;
-        CHS *b_now;
-
-        for(int i=0; i< Size;i++){//copying fields of Table elements
-            if(!b.Chains[i].init){
-                Chains[i].init = false;
-                Chains[i].word = "undef";
-                Chains[i].main = nullptr;
-                Chains[i].next = nullptr;
-            }
-            else{
-                bc_now = &Chains[i];
-                b_now = &b.Chains[i];
-
-                while(b_now != nullptr){
-                    bc_now->init = true;
-                    bc_now->word = b_now->word;
-
-                    b_main = new Value;     //generate copy of main
-
-                    b_main->age = b_now->main->age;
-                    b_main->weight = b_now->main->age;
-
-                    bc_now->main = b_main;      //add copy of main
-
-                    if(b_now->next != nullptr) //add new Chain if needed
-                        bc_now->next = new CHS;
-
-                    b_now = b_now->next;
-                    bc_now = bc_now->next;
-                }
-            }
-
-
-        }
-    }
+    explicit HashTable(int size);                       //another size
+    /*tested*/HashTable(const HashTable& b);
     ~HashTable();
 
-/*tested*/
-    void CopyTable(HashTable b);        //copy hash-table
+    ///Data retrieval
+
+    Value& at(const Key& k);                             //returns value by key
+    const Value& at(const Key& k) const;                 //returns value by key
+    Value& operator[](const Key& k);                     //returns value by key. An unsafe method.
+
+    ///Data operators
+
+    bool erase(const Key& k);                           //removes the element for a given key
+    bool insert(const Key& k, const Value& v);          //Insert into the container. Update numEl field .The return value is the success of the insertion
+    void CopyTable(HashTable b);                         //copy hash-table
     void swap(HashTable& b);
-    void clear();                       //clean container
-    void ExpandTable();                 //increase the size of the table
+    static bool compareElements(Value* a, Value* b);
+    void clear();                                        //clean container
 
-    HashTable& operator=(const HashTable& b);
-    Value& operator[](const Key& k);    //returns value by key. An unsafe method.
-    Value& at(const Key& k);            //returns value by key
-    const Value& at(const Key& k) const;//returns value by key
-    bool contains(const Key& k) const;  //Checking the presence of a value for a given key
-
-    bool erase(const Key& k);                    //removes the element for a given key
-    bool insert(const Key& k, const Value& v);  //Insert into the container. The return value is the success of the insertion
-    bool add_elem(const Key& k,const Value& v);
-    static bool compareElements(Value* a, Value* b){
-        if(a->weight != b->weight)return false;
-        return a->age == b->age;
+   ///Comparator
+    friend bool operator==(const HashTable &a, const HashTable &b){
+       if(a.numEl != b.numEl) return false;
+       int n = (int)a.size();
+       for(int i =0 ; i < n; i++){
+           if(a.Chains[i].init)
+               if(!b.contains(a.Chains[i].word))
+                   return false;
+       }
+       return false;
+   }
+    friend bool operator!=(const HashTable &a, const HashTable &b){
+        return !(a == b);
     }
 
-    int hash(Key word) const;           //returns a hash-value for a given key
+    HashTable& operator=(const HashTable& b);
+
+
+
+    bool contains(const Key& k) const;                   //Checking the presence of a value for a given key
+
     size_t size() const{
-        return (size_t)Size;
+        return (size_t)numEl;
     }
     bool empty() const{
         return (numEl == 0);
     }
-    int numof(){
-        return numEl;
+    int tablesize(){
+        return Size;
     }
 
     //friends
-    friend bool operator==(const HashTable & a, const HashTable & b){
-        if(a.numEl != b.numEl) return false;
-        int n = (int)a.size();
-        for(int i =0 ; i < n; i++){
-            if(a.Chains[i].init)
-                if(!b.contains(a.Chains[i].word))
-                    return false;
-        }
-        return false;
-    }
-    friend bool operator!=(const HashTable & a, const HashTable & b){
-        return !(a == b);
-    }
+
 };
 
 

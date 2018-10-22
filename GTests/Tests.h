@@ -6,10 +6,13 @@
 #define INC_1_LAB_TESTS_H
 
 #include "../header.h"
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 class Tests {
 
 };
 
+void Testing(int argc, char **argv);
 
 #endif //INC_1_LAB_TESTS_H

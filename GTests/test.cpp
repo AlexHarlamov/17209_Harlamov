@@ -13,6 +13,12 @@ namespace {
     public:
     };
 }
+
+void Testing(int argc, char **argv){
+    testing::InitGoogleTest(&argc,argv);
+    RUN_ALL_TESTS();
+}
+
 TEST_F(ClassDeclaration,Constructors1){
     HashTable b;
     ASSERT_EQ(START_NUM,b.size());
@@ -22,9 +28,9 @@ TEST_F(ClassDeclaration,Constructors1){
     v.age = 999;
     v.weight = 999;
     ASSERT_EQ(true,b.insert(k,v));
-    ASSERT_EQ(1,b.numof());
+    ASSERT_EQ(1,b.tablesize());
     HashTable b_1(b);
-    ASSERT_EQ(1,b.numof());
+    ASSERT_EQ(1,b.tablesize());
 }
 TEST_F(ClassDeclaration,Constructors2){     //long tables
     HashTable b;
@@ -43,3 +49,4 @@ TEST_F(ClassDeclaration,Insert_Expand){
         ASSERT_EQ(true,b.insert(k,*v));
     }
 }
+
