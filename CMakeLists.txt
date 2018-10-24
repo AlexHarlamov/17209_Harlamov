@@ -3,6 +3,10 @@ project(1_lab)
 
 set(CMAKE_CXX_STANDARD 14)
 
+#coverage
+set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+
 #tests
 add_subdirectory(lib/googletest-master)
 include_directories(lib/googletest-master/googletest/include)

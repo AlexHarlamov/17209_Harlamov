@@ -55,6 +55,30 @@ CMAKE_BINARY_DIR = D:\CLionProjects\1_lab\cmake-build-debug
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"D:\Program Files\CLion 2018.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"D:\Program Files\CLion 2018.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	"D:\Program Files\CLion 2018.2.3\bin\cmake\win\bin\cmake.exe" -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	"D:\Program Files\CLion 2018.2.3\bin\cmake\win\bin\cmake.exe" -P cmake_install.cmake
+.PHONY : install/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -76,6 +100,28 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	"D:\Program Files\CLion 2018.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	"D:\Program Files\CLion 2018.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -122,32 +168,102 @@ depend:
 	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/build
 .PHONY : 1_lab/fast
 
-main.obj: main.cpp.obj
+#=============================================================================
+# Target rules for targets named gmock_main
 
-.PHONY : main.obj
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) -f lib\googletest-master\googlemock\CMakeFiles\gmock_main.dir\build.make lib/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gmock
+
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 gmock
+.PHONY : gmock
+
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) -f lib\googletest-master\googlemock\CMakeFiles\gmock.dir\build.make lib/googletest-master/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) -f lib\googletest-master\googlemock\gtest\CMakeFiles\gtest.dir\build.make lib/googletest-master/googlemock/gtest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) -f lib\googletest-master\googlemock\gtest\CMakeFiles\gtest_main.dir\build.make lib/googletest-master/googlemock/gtest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/main.cpp.obj
-.PHONY : main.cpp.obj
-
-main.i: main.cpp.i
-
-.PHONY : main.i
+GTests/test.obj:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/GTests/test.obj
+.PHONY : GTests/test.obj
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
+GTests/test.i:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/GTests/test.i
+.PHONY : GTests/test.i
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/main.cpp.s
-.PHONY : main.cpp.s
+GTests/test.s:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/GTests/test.s
+.PHONY : GTests/test.s
+
+# target to build an object file
+HashTable.obj:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/HashTable.obj
+.PHONY : HashTable.obj
+
+# target to preprocess a source file
+HashTable.i:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/HashTable.i
+.PHONY : HashTable.i
+
+# target to generate assembly for a file
+HashTable.s:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/HashTable.s
+.PHONY : HashTable.s
+
+# target to build an object file
+main.obj:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/main.obj
+.PHONY : main.obj
+
+# target to preprocess a source file
+main.i:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/main.i
+.PHONY : main.i
+
+# target to generate assembly for a file
+main.s:
+	$(MAKE) -f CMakeFiles\1_lab.dir\build.make CMakeFiles/1_lab.dir/main.s
+.PHONY : main.s
 
 # Help Target
 help:
@@ -155,9 +271,23 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
+	@echo ... install/local
+	@echo ... install
 	@echo ... edit_cache
 	@echo ... 1_lab
 	@echo ... rebuild_cache
+	@echo ... list_install_components
+	@echo ... install/strip
+	@echo ... gmock_main
+	@echo ... gmock
+	@echo ... gtest
+	@echo ... gtest_main
+	@echo ... GTests/test.obj
+	@echo ... GTests/test.i
+	@echo ... GTests/test.s
+	@echo ... HashTable.obj
+	@echo ... HashTable.i
+	@echo ... HashTable.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

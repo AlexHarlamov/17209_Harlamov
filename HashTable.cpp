@@ -132,9 +132,14 @@ bool HashTable::erase(const Key &k) {
     if (!Chains[key].init)return false;                //if undefined hash-table cell
     if (Chains[key].word == k){
         if(Chains[key].next != nullptr){
-            CHS *tmp = &Chains[key];
+
+            CHS* tmp = Chains[key].next;
+            Chains[key].CopyByCHS(tmp);
+            Chains[key].next = tmp->next;
+            delete tmp;
 
         } else{
+
             delete Chains[key].main;
             Chains[key].ToDeafault();
         }
