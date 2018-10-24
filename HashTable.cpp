@@ -1,7 +1,7 @@
 //
 // Created by alex_ on 18.10.2018.
 //
-#include "header.h"
+#include "HashTable.h"
 
 HashTable::HashTable() {
     Size = START_NUM;

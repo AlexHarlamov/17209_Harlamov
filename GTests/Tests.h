@@ -5,7 +5,7 @@
 #ifndef INC_1_LAB_TESTS_H
 #define INC_1_LAB_TESTS_H
 
-#include "../header.h"
+#include "../HashTable.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
