@@ -12,8 +12,8 @@ HashTable::HashTable() {
     }
 }
 
-HashTable::HashTable(int size) {
-    Size = size;
+HashTable::HashTable(int Nsize) {
+    Size = Nsize;
     Chains = new CHS [Size];
     numEl = 0;
     for(int i=0; i< Size; i++){
@@ -26,7 +26,7 @@ HashTable::HashTable(const HashTable& b){
     Chains = new CHS [Size];
     numEl = 0;
 
-    CopyTable(b);
+    copyTable(b);
 }
 
 HashTable::~HashTable() {
@@ -89,7 +89,7 @@ Value& HashTable::at(const Key &k) {
 
 HashTable& HashTable::operator=(const HashTable& b){
     if (this == &b)return *this;
-    this->CopyTable(b);
+    this->copyTable(b);
     return *this;
 }
 
@@ -106,7 +106,7 @@ void HashTable::swap(HashTable &b) {
 }
 
 void HashTable::clear() {
-    for (int i = Size; i < Size; i++){
+    for (int i = 0; i < Size; i++){
 
         Chains[i].word = "undef";
         Chains[i].init = false;
@@ -131,10 +131,14 @@ bool HashTable::erase(const Key &k) {
     if (numEl == 0)return false;                          //if empty Table
     if (!Chains[key].init)return false;                //if undefined hash-table cell
     if (Chains[key].word == k){
-        CHS *tmp = &Chains[key];
-        Chains[key] = *tmp->next;
-        delete tmp->main;
-        delete tmp;
+        if(Chains[key].next != nullptr){
+            CHS *tmp = &Chains[key];
+
+        } else{
+            delete Chains[key].main;
+            Chains[key].ToDeafault();
+        }
+        numEl--;
         return true;
     }
     //if cell found by hash-value, but key word incorrect
@@ -148,6 +152,8 @@ bool HashTable::erase(const Key &k) {
             delete now->next;
 
             now->next = tmp;
+            numEl--;
+
             return true;
         }
         now = now->next;
@@ -161,10 +167,12 @@ bool HashTable::insert(const Key& k, const Value& v){
         numEl ++;
         return true;
     }
-    return false;
+    return true;
 }
 
 bool HashTable::add_elem(const Key& k,const Value& v){
+    if(contains(k))return false;
+
     int key = hash(k);
     if (Chains[key].init){      //if we have collision
         CHS* now = &Chains[key];
@@ -180,18 +188,19 @@ bool HashTable::add_elem(const Key& k,const Value& v){
 }
 
 bool HashTable::contains(const Key& k) const{
-    if(!Chains[hash(k)].init)return false;
-    if(Chains[hash(k)].word == k ) return true;
-    if(Chains[hash(k)].next == nullptr) return false;
-    CHS* now = &Chains[hash(k)];
+    int key = hash(k);
+    if(!Chains[key].init)return false;
+    if(Chains[key].word == k ) return true;
+    if(Chains[key].next == nullptr) return false;
+    CHS* now = &Chains[key];
     while(now->next != nullptr){
         if(now->word == k)return true;
         now = now->next;
     }
-    return false;
+    return now->word == k;
 }
 
-void HashTable::CopyTable(HashTable b){
+void HashTable::copyTable(const HashTable &b){
     ReloadData(b.Size,b);
 }
 
@@ -199,7 +208,7 @@ void HashTable::ExpandTable() {
     ReloadData(Size*2,*this);
 }
 
-bool HashTable::ReloadData(int NewSize, HashTable &Source) {
+bool HashTable::ReloadData(int NewSize,const HashTable &Source) {
 
     HashTable *NewHashTable = new HashTable(NewSize);
     CHS* tmpIter;
@@ -260,7 +269,15 @@ void CHS::CopyByInstr(const Value &v, const Key &k){
     word = k;
 }
 
- bool HashTable::compareElements(Value* a, Value* b){
-    if(a->weight != b->weight)return false;
-    return a->age == b->age;
+ bool HashTable::compareElements(Value& a, Value& b){
+    if(a.weight != b.weight)return false;
+    return a.age == b.age;
+}
+Value::Value(const unsigned int ag, const unsigned int we) {
+    age = ag;
+    weight = we;
+}
+Value::Value() {
+    age = 0;
+    weight = 0;
 }
