@@ -1,0 +1,30 @@
+#include "dialog.h"
+#include "ui_dialog.h"
+#include <string>
+#include "../lab2/Field.h"
+#include "../lab2/ListOfWarriors.h"
+#include <QMessageBox>
+
+Dialog::Dialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Dialog)
+{
+    ui->setupUi(this);
+}
+
+Dialog::~Dialog()
+{
+    delete ui;
+}
+
+void Dialog::on_buttonBox_accepted()
+{
+    std::string text = ui->lineEdit->text().toUtf8().constData();
+    for(auto it : text){
+        if(it < 47 || it > 57)
+            QMessageBox::critical(this,"Error","onvalid value");
+    }
+    int new_sz = stoi(text);
+    Field::getGlobal()->RestoreField(new_sz);
+    ListOfWarriors::getInstance()->kill_all_warriors();
+}
